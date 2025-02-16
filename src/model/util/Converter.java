@@ -18,12 +18,7 @@ public class Converter {
 
             while(line != null) {
                 String[] field = line.split(", ");
-
-                String name = field[0];
-                double price = Double.parseDouble(field[1]);
-                int quantity = Integer.parseInt(field[2]);
-
-                products.add(new Product(name, price, quantity));
+                products.add(new Product(field[0], Double.parseDouble(field[1]), Integer.parseInt(field[2])));
 
                 line = br.readLine();
             }
