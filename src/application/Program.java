@@ -19,21 +19,62 @@ public class Program {
 
         System.out.println("Digite as informacoes de cada produto (nome, preco, quantidade. FIM acaba): ");
         String line;
-        do {
-            line = sc.nextLine();
-            lines.add(line);
-        } while (!line.endsWith("FIM"));
 
-        lines.remove(lines.size() - 1);
+        try {
+            do {
+                line = sc.nextLine();
 
-        CreateFile.create(path + "\\SourceFiles.csv", lines);
+                String[] field = line.split(", ");
 
-        CreateFolder.create(path);
+                if(!line.equals("FIM")) {
+                    if(!isDouble(field[1])) {
+                        throw new NumberFormatException();
+                    }
+                    if(!isInteger(field[2])) {
+                        throw new NumberFormatException();
+                    }
+                }
 
-        Converter.convertFile(path);
+                lines.add(line);
+            } while (!line.endsWith("FIM"));
 
-        System.out.println("Arquivos csv criados com sucesso!");
+            lines.remove(lines.size() - 1);
 
-        sc.close();
+            CreateFile.create(path + "\\SourceFiles.csv", lines);
+
+            CreateFolder.create(path);
+
+            Converter.convertFile(path);
+
+            System.out.println("Arquivos csv criados com sucesso!");
+        }
+        catch (NumberFormatException e) {
+            System.out.print("Erro: informações inválidas");
+
+        }
+        catch (IndexOutOfBoundsException e) {
+            System.out.print("Erro: informações inválidas");
+        }
+        finally {
+            sc.close();
+        }
+    }
+    private static Boolean isDouble(String field) {
+        try {
+            Double.parseDouble(field);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static Boolean isInteger(String field) {
+        try {
+            Integer.parseInt(field);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
