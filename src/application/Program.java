@@ -36,9 +36,9 @@ public class Program {
                 }
 
                 lines.add(line);
-            } while (!line.endsWith("FIM"));
+            } while (!line.equals("FIM"));
 
-            lines.remove(lines.size() - 1);
+            lines.removeLast();
 
             CreateFile.create(path + "\\SourceFiles.csv", lines);
 
